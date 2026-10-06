@@ -63,12 +63,19 @@ int main ( int argc, char* argv[]){
                 printf("exiting...\n");
                 has_quit = 1;
             } else if(!strcmp(token1 ,"HELP") || !strcmp(token1,"-H")){ //help
-                printf("these are all the commands:\n\
+                printf("These are all the commands:\n\
     -h, help  : lists commands\n\
     -q, quit  : quits the program\n\
     -c, clear : clears all vectors stored in memory\n\
     -l, list  : list all vectors in memory\n\
     vName     : gets the value of that vector name\n\
+    \n\
+    Possible operators\n\
+     + : adds two vectors
+     - : subtracts two vectos
+     . : dot product of the two vectors
+     X : cross product of the two vectos
+     * : scalar multiplication of the two vectors
     \n\
     Formula formats:\n\
     vName1 = vName2 operator vName3 : sets vector name 1 to the resulting vector of vName2 and vName3\n\
