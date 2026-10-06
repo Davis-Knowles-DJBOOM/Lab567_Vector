@@ -39,7 +39,7 @@ int main ( int argc, char* argv[]){
 
 
     while(!has_quit){
-        printf("enter a vector command or -h for help\n");
+        printf("Enter a vector command or -h for help:\n");
         fgets(user_input, 80, stdin);
         
         all_to_upper(user_input);
@@ -63,7 +63,16 @@ int main ( int argc, char* argv[]){
                 printf("exiting...\n");
                 has_quit = 1;
             } else if(!strcmp(token1 ,"HELP") || !strcmp(token1,"-H")){ //help
-                printf("these are all the commands\n\n");
+                printf("these are all the commands:\n\
+    -h, help  : lists commands\n\
+    -q, quit  : quits the program\n\
+    -c, clear : clears all vectors stored in memory\n\
+    -l, list  : list all vectors in memory\n\
+    vName     : gets the value of that vector name\n\
+    \n\
+    Formula formats:\n\
+    vName1 = vName2 operator vName3 : sets vector name 1 to the resulting vector of vName2 and vName3\n\
+    vName1 operator vName2 : performs operator on both vectors\n");
             } else if(!strcmp(token1 ,"CLEAR") || !strcmp(token1,"-C")){ //clear
                 //clear vectors
                 vectors_clear();
