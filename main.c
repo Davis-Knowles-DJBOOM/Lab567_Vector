@@ -18,6 +18,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include "vector_calc.h"
 #include "vectors.h"
 #include "vStruct.h"
@@ -25,7 +26,7 @@
 
 void all_to_upper(char *str);
 void replace_char(char *str, char old, char new);
-
+bool isNumber(char* str);
 
 int main ( int argc, char* argv[]){
 
@@ -115,6 +116,9 @@ int main ( int argc, char* argv[]){
                 if(!strcmp(token2, "=") && ((token4 != NULL) ? ((strcmp(token4, "+") && strcmp(token4, "-") && strcmp(token4, ".") && strcmp(token4, "*") && strcmp(token4, "X"))) : 1)){    //assignment
                     //set vector
                     //printf("%s, %s, %s\n", token3, token4, token5);
+                    if(!isNumber(token3) || !isNumber(token4) || !isNumber(token5)){
+                        printf("non number detected - defaulting to zero\n");
+                    }
                     set_vector(token1, ((token3 != NULL) ? (atof(token3)) : 0), ((token4 != NULL) ? (atof(token4)) : 0), ((token5 != NULL) ? (atof(token5)) : 0));
                 
                 } else if(token3 != NULL && strcmp(token2, "=")){  //operations no set
@@ -209,4 +213,14 @@ int main ( int argc, char* argv[]){
         for(int i = 0; *(str+i) != '\0'; i++){
             *(str+i) = toupper((unsigned char) *(str+i));
         }
+    }
+
+    bool isNumber(char* str) {
+    if (str == NULL || *str == '\0') {
+        return false;
+    }
+    char* endptr;
+    strtod(str, &endptr); // string to double
+    // Return true if endptr is null terminator 
+    return *endptr == '\0';
     }

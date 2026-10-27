@@ -29,14 +29,33 @@ int load_file(char *filename){
     do{
         Vector vec;
         int result = fscanf(file, "%[^,], %lf, %lf, %lf\n", vec.name, &vec.x, &vec.y, &vec.z);
-        printf("result: %d\n", result);
+        //printf("result: %d\n", result);
         if (result == 4) {
+            set_vector(vec.name, vec.x, vec.y, vec.z);
+        } else if(result == 1) {
+            printf("Warning: Incomplete vector data in file: %s in vector %s - assigned zero values for missing components\n", filename, vec.name);
+            //result = fscanf(file, "%[^,],\n", vec.name);
+            vec.x = 0;
+            vec.y = 0;
+            vec.z = 0;
+            set_vector(vec.name, vec.x, vec.y, vec.z);
+        } else if(result == 2) {
+            printf("Warning: Incomplete vector data in file: %s in vector %s - assigned zero values for missing components\n", filename, vec.name);
+            result = fscanf(file, "%lf\n", &vec.x);
+            vec.y = 0;
+            vec.z = 0;
+            set_vector(vec.name, vec.x, vec.y, vec.z);
+        } else if(result == 3){
+            printf("Warning: Incomplete vector data in file: %s in vector %s - assigned zero values for missing components\n", filename, vec.name);
+            result = fscanf(file, "%lf, %lf\n", &vec.x, &vec.y);
+            vec.z = 0;
             set_vector(vec.name, vec.x, vec.y, vec.z);
         } else {
             printf("Error reading vector data from file: %s\n", filename);
             fclose(file);
             return 1; // Exit the loop if reading fails
         }
+        
     } while (!feof(file));
 
     // Read vector data from file
