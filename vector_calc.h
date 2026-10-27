@@ -17,27 +17,26 @@
 #ifndef MY_VECTOR_CALC_H
 #define MY_VECTOR_CALC_H
 
-#include "vectors.h"
+#include "vStruct.h"
 
 void vector_add_set(char *vector_one_name, char *vector_two_name, char *output_vector_name);
 
-struct Vector vector_add(char *vector_one_name, char *vector_two_name);
+Vector vector_add(char *vector_one_name, char *vector_two_name);
 //-----
 void vector_sub_set(char *vector_one_name, char *vector_two_name, char *output_vector_name);
 
-struct Vector vector_sub(char *vector_one_name, char *vector_two_name);
+Vector vector_sub(char *vector_one_name, char *vector_two_name);
 //-----
-/*
 void vector_dot_set(char *vector_one_name, char *vector_two_name, char *output_vector_name);
 
-struct Vector vector_dot(char *vector_one_name, char *vector_two_name);
+Vector vector_dot(char *vector_one_name, char *vector_two_name);
 //-----
 void vector_cross_set(char *vector_one_name, char *vector_two_name, char *output_vector_name);
 
-struct Vector vector_cross(char *vector_one_name, char *vector_two_name);
+Vector vector_cross(char *vector_one_name, char *vector_two_name);
 //------
-void vector_scalar_set(char *vector_one_name, char *vector_two_name, char *output_vector_name);
+void vector_scalar_set(char *vector_one_name, double scalar, char *output_vector_name);
 
-struct Vector scalar(char *vector_one_name, char *vector_two_name);
-*/
+Vector vector_scalar(char *vector_one_name, double scalar);
+
 #endif

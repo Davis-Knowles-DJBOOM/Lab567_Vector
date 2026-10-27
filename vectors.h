@@ -17,13 +17,7 @@
 #ifndef MYVECTORS_H
 #define MYVECTORS_H
 
-typedef struct Vector{
-    char name[20];
-    double x;
-    double y;
-    double z;
-} Vector;
-
+#include "vStruct.h"
 
 Vector get_vector(char *name);
 

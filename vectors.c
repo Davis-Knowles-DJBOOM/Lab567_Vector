@@ -1,11 +1,9 @@
 /********************************************************************
 * @file vectors.c
-* @brief A simple state machine
-* @param int argc - the number of arguments
-* @param char* argv[] string of args
+* @brief vector storage management
 * @return - the int return code
 * @author Davis Knowles
-* @date 9/21/2026
+* @date 10/15/2026
 * @version 1.0
 * @copyright Copyright (C) 2026 C&E Solutions SP. All Rights Reserved.
 *Compile:
@@ -17,56 +15,64 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "vStruct.h"
 
-typedef struct Vector{
-    char name[20];
-    double x;
-    double y;
-    double z;
-} Vector;
+#define GROWTH_SIZE 5
+
+//function initializations
+int vector_exists(char *name);
+Vector *allocate(Vector* ptr, int size);
+Vector *reallocate(Vector* ptr, int size);
+int deallocate(Vector* ptr);
 
 int vector_count = -1;
+int currT_vectors = 10;
 
-struct Vector vectors[10];
+Vector *vectors = NULL;
 
-int vector_exists(char *name);
-
-struct Vector get_vector(char *name){
+Vector get_vector(char *curr_name){
     //printf("%d\n", vector_count);
+    //printf("%s\n", curr_name);
     for(int i = 0; i <= vector_count; i++){
-        //printf("%s\n", vectors[i].name);
-        if(!strcmp(name, vectors[i].name)){
+        //printf("  %s\n", vectors[i].name);
+        if(!strcmp(curr_name, vectors[i].name)){
             return vectors[i];
         }
     }
-    printf("vector: %s does not exist", name);
+    printf("vector: %s does not exist\n", curr_name);
     Vector err = {0};
     return err;
 }
 
 void set_vector(char *name, double x, double y, double z){
-    struct Vector vec;
+    if(vectors == NULL){
+        vectors = allocate(vectors, currT_vectors);
+    }
+    Vector vec;
     strcpy(vec.name, name);
     vec.x = x;
     vec.y = y;
     vec.z = z;
     int pos = vector_exists(name);
-    if(pos >= 0 && pos < 10){
+    if(pos >= 0 && vector_count+1 < 10){
         printf("vector exists updating old values\n");
-        vectors[pos] = vec;
-    } else if (pos == -1){
+        *(vectors + pos) = vec;
+        printf("%s = (%f, %f, %f)\n", vectors[pos].name, vectors[pos].x, vectors[pos].y, vectors[pos].z);
+    } else if (pos == -1 && vector_count+1 < 10){
         vector_count++;
-        vectors[vector_count] = vec;
+        *(vectors + vector_count) = vec;
         printf("created new vector: ");
         printf("%s = (%f, %f, %f)\n", vectors[vector_count].name, vectors[vector_count].x, vectors[vector_count].y, vectors[vector_count].z);
     } else {
         //error condition
         printf("vector storage full clear before adding more\n");
+        //vectors = reallocate(vectors, currT_vectors);
     }
 }
 
 void vectors_clear(){
     vector_count = -1;
+    deallocate(vectors);
     printf("vector mem cleared\n");
 }
 
@@ -85,10 +91,26 @@ void vectors_list(){
 // true condition returns index of vector name 
 // false condition returns -1
 int vector_exists(char *name){
-    for(int i = 0; i < vector_count; i++){
+    for(int i = 0; i <= vector_count; i++){
         if(!strcmp(name, vectors[i].name)){
             return i;
         }
     }
     return -1;
 }
+    //init memory allocation - partially implemented 
+    Vector *allocate(Vector* ptr, int size){
+    ptr = malloc(size*sizeof(Vector));
+    return ptr;
+    }
+    //dynamic memory allocation - not implemented yet
+    Vector *reallocate(Vector* ptr, int size){
+    size += GROWTH_SIZE;
+    ptr = realloc(ptr, size*sizeof(Vector));
+    return ptr;
+    }
+    //dynamic memory allocation - not implemented yet
+    int deallocate(Vector* ptr){
+        free(ptr);
+        return 0;
+    }
