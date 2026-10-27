@@ -30,7 +30,16 @@ int currT_vectors = 10;
 
 Vector *vectors = NULL;
 
-Vector get_vector(char *curr_name){
+Vector get_vector(int index){
+    if(index < 0 || index > vector_count){
+        printf("vector index out of bounds\n");
+        Vector err = {0};
+        return err;
+    }
+    return vectors[index];
+}
+
+Vector find_vector(char *curr_name){
     //printf("%d\n", vector_count);
     //printf("%s\n", curr_name);
     for(int i = 0; i <= vector_count; i++){
@@ -65,8 +74,9 @@ void set_vector(char *name, double x, double y, double z){
         printf("%s = (%f, %f, %f)\n", vectors[vector_count].name, vectors[vector_count].x, vectors[vector_count].y, vectors[vector_count].z);
     } else {
         //error condition
-        printf("vector storage full clear before adding more\n");
-        //vectors = reallocate(vectors, currT_vectors);
+        //printf("vector storage full clear before adding more\n");
+        printf("vector storage full reallocating memory\n");
+        vectors = reallocate(vectors, currT_vectors);
     }
 }
 
@@ -87,6 +97,10 @@ void vectors_list(){
     }
 }
 
+int get_vector_count(){
+    return vector_count;
+}
+
 
 // true condition returns index of vector name 
 // false condition returns -1
@@ -105,12 +119,25 @@ int vector_exists(char *name){
     }
     //dynamic memory allocation - not implemented yet
     Vector *reallocate(Vector* ptr, int size){
-    size += GROWTH_SIZE;
-    ptr = realloc(ptr, size*sizeof(Vector));
-    return ptr;
+        size += GROWTH_SIZE;
+        int count = 0;
+        Vector *temp = NULL;
+        do {
+            temp = realloc(ptr, size*sizeof(Vector));
+            if(temp == NULL){
+                printf("realloc failed - trying again\n");
+            }
+            count++;
+        } while(temp == NULL || count < 5);
+        ptr = temp;
+        return ptr;
     }
     //dynamic memory allocation - not implemented yet
     int deallocate(Vector* ptr){
         free(ptr);
-        return 0;
+        if(ptr == NULL){
+            return 0;
+        } else {
+            return 1;
+        }
     }

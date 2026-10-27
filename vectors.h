@@ -19,12 +19,16 @@
 
 #include "vStruct.h"
 
-Vector get_vector(char *name);
+Vector get_vector(int index);
+
+Vector find_vector(char *name);
 
 void set_vector(char *name, double x, double y, double z);
 
 void vectors_clear();
 
 void vectors_list();
+
+int get_vector_count();
 
 #endif

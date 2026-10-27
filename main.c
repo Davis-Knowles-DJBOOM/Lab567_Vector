@@ -21,6 +21,7 @@
 #include "vector_calc.h"
 #include "vectors.h"
 #include "vStruct.h"
+#include "fileIO.h"
 
 void all_to_upper(char *str);
 void replace_char(char *str, char old, char new);
@@ -28,7 +29,7 @@ void replace_char(char *str, char old, char new);
 
 int main ( int argc, char* argv[]){
 
-    
+    atexit(vectors_clear);
 
     int has_quit = 0;
     char user_input[80];
@@ -69,6 +70,8 @@ int main ( int argc, char* argv[]){
     -q, quit  : quits the program\n\
     -c, clear : clears all vectors stored in memory\n\
     -l, list  : list all vectors in memory\n\
+    -lv, load : loads vectors from a csv file\n\
+    -sv, save : saves vectors to a csv file\n\
     vName     : gets the value of that vector name\n\
     \n\
     Possible operators\n\
@@ -85,15 +88,30 @@ int main ( int argc, char* argv[]){
                 //clear vectors
                 vectors_clear();
                 printf("all saved vectors cleared\n");
+            } else if(!strcmp(token1 ,"SAVE") || !strcmp(token1,"-SV")){ //save
+                if(token2 == NULL){
+                    printf("please provide a filename to save to\n");
+                    continue;
+                }
+                //save vectors to file
+                save_file(token2);
+
+            } else if(!strcmp(token1 ,"LOAD") || !strcmp(token1,"-LV")){ //load
+                if(token2 == NULL){
+                    printf("please provide a filename to load from\n");
+                    continue;
+                }
+                //load vectors from file
+                load_file(token2);
             } else if(!strcmp(token1 ,"LIST") || !strcmp(token1,"-L")){    //list
                 //list all vectors
                 vectors_list();
             } else if(token2 == NULL){    //get vector
                 //fetch vector by name if token 2 isn't an operator
-                Vector temp_ans = get_vector(token1);
+                Vector temp_ans = find_vector(token1);
                 printf("%s = (%f, %f, %f)\n", temp_ans.name, temp_ans.x, temp_ans.y, temp_ans.z);
             
-            } else if(token2 != NULL){
+            } else if(token2 != NULL){  
                 if(!strcmp(token2, "=") && ((token4 != NULL) ? ((strcmp(token4, "+") && strcmp(token4, "-") && strcmp(token4, ".") && strcmp(token4, "*") && strcmp(token4, "X"))) : 1)){    //assignment
                     //set vector
                     //printf("%s, %s, %s\n", token3, token4, token5);
@@ -129,7 +147,7 @@ int main ( int argc, char* argv[]){
                     } else {
                         //error condition
                         printf("error condition 0\n");
-                        break;
+                        continue;
                     }
                     printf("%s = (%f, %f, %f)\n", temp_ans.name, temp_ans.x, temp_ans.y, temp_ans.z);
                     

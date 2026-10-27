@@ -23,8 +23,8 @@
 //adds two vectors
 Vector vector_add(char *vector_one_name, char *vector_two_name){
     Vector ans;
-    Vector v1 = get_vector(vector_one_name);
-    Vector v2 = get_vector(vector_two_name);
+    Vector v1 = find_vector(vector_one_name);
+    Vector v2 = find_vector(vector_two_name);
     strcpy(ans.name, "ans");
     ans.x = v1.x + v2.x;
     ans.y = v1.y + v2.y;
@@ -41,8 +41,8 @@ void vector_add_set(char *vector_one_name, char *vector_two_name, char *output_v
 //subtracts two vectors
 Vector vector_sub(char *vector_one_name, char *vector_two_name){
     Vector ans;
-    Vector v1 = get_vector(vector_one_name);
-    Vector v2 = get_vector(vector_two_name);
+    Vector v1 = find_vector(vector_one_name);
+    Vector v2 = find_vector(vector_two_name);
     strcpy(ans.name, "ans");
     ans.x = v1.x - v2.x;
     ans.y = v1.y - v2.y;
@@ -59,8 +59,8 @@ void vector_sub_set(char *vector_one_name, char *vector_two_name, char *output_v
 //computes dot product for two vectors
 Vector vector_dot(char *vector_one_name, char *vector_two_name){
     Vector ans;
-    Vector v1 = get_vector(vector_one_name);
-    Vector v2 = get_vector(vector_two_name);
+    Vector v1 = find_vector(vector_one_name);
+    Vector v2 = find_vector(vector_two_name);
     strcpy(ans.name, "ans");
     ans.x = v1.x * v2.x;
     ans.y = v1.y * v2.y;
@@ -80,8 +80,8 @@ void vector_dot_set(char *vector_one_name, char *vector_two_name, char *output_v
 //calculates cross product for two vectors
 Vector vector_cross(char *vector_one_name, char *vector_two_name){
     Vector ans;
-    Vector v1 = get_vector(vector_one_name);
-    Vector v2 = get_vector(vector_two_name);
+    Vector v1 = find_vector(vector_one_name);
+    Vector v2 = find_vector(vector_two_name);
     strcpy(ans.name, "ans");
     ans.x = (v1.y * v2.z) - (v1.z * v2.y);
     ans.y = (v1.z * v2.x) - (v1.x * v2.z);
@@ -98,7 +98,7 @@ void vector_cross_set(char *vector_one_name, char *vector_two_name, char *output
 //multiplies vector by scalar
 Vector vector_scalar(char *vector_one_name, double scalar){
     Vector ans;
-    Vector v1 = get_vector(vector_one_name);
+    Vector v1 = find_vector(vector_one_name);
     strcpy(ans.name, "ans");
     ans.x = v1.x * scalar;
     ans.y = v1.y * scalar;
