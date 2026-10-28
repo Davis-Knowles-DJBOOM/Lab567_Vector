@@ -1,3 +1,3 @@
 # Lab567_Vector
 
-SOME TEXT
+A vector calculator with dynamic memory allocation and file load and save functionalities.
