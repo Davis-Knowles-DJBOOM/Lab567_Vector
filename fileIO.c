@@ -26,6 +26,7 @@ int load_file(char *filename){
         return 1;
     }
 
+
     do{
         Vector vec;
         int result = fscanf(file, "%[^,], %lf, %lf, %lf\n", vec.name, &vec.x, &vec.y, &vec.z);
@@ -34,7 +35,6 @@ int load_file(char *filename){
             set_vector(vec.name, vec.x, vec.y, vec.z);
         } else if(result == 1) {
             printf("Warning: Incomplete vector data in file: %s in vector %s - assigned zero values for missing components\n", filename, vec.name);
-            //result = fscanf(file, "%[^,],\n", vec.name);
             vec.x = 0;
             vec.y = 0;
             vec.z = 0;
@@ -50,6 +50,9 @@ int load_file(char *filename){
             result = fscanf(file, "%lf, %lf\n", &vec.x, &vec.y);
             vec.z = 0;
             set_vector(vec.name, vec.x, vec.y, vec.z);
+        } else if(result == 0){
+            printf("Warning: Empty line or missing vector data in file: %s. Skipping this line.\n", filename);
+            return 1; // Skip this line and continue to the next
         } else {
             printf("Error reading vector data from file: %s\n", filename);
             fclose(file);
@@ -57,6 +60,7 @@ int load_file(char *filename){
         }
         
     } while (!feof(file));
+
 
     // Read vector data from file
     fclose(file);
@@ -81,6 +85,7 @@ int save_file(char *filename){
         fprintf(file, "%s, %f, %f, %f\n", name, x, y, z);
     }
     printf("vectors saved to file: %s\n", filename);
+
 
     // Write vector data to file
     fclose(file);
