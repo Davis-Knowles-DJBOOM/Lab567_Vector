@@ -39,7 +39,7 @@ int main ( int argc, char* argv[]){
     char *token3 = NULL;   // vector name - first vector value (x)
     char *token4 = NULL;   // operator - (y)
     char *token5 = NULL;   // vector name - (z)
-
+    
 
     while(!has_quit){
         printf("Enter a vector command or -h for help:\n>> ");

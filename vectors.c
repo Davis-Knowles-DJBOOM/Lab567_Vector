@@ -55,7 +55,7 @@ Vector find_vector(char *curr_name){
 
 void set_vector(char *name, double x, double y, double z){
     if(vectors == NULL){
-        vectors = allocate(vectors, currT_vectors);
+        *vectors = allocate(vectors, currT_vectors);
     }
     Vector vec;
     strcpy(vec.name, name);
